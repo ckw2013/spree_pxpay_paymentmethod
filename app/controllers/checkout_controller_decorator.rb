@@ -15,7 +15,7 @@ Spree::CheckoutController.class_eval do
         payment.response_code = response[:auth_code]
         payment.save
         payment.complete
-        @order = payment.order
+        @order = payment.current_order
         @order.next
 
         state_callback(:after)
@@ -23,7 +23,7 @@ Spree::CheckoutController.class_eval do
           state_callback(:before)
           flash.notice = t(:order_processed_successfully)
           flash[:commerce_tracking] = "nothing special"
-          redirect_to completion_route
+          @order.next
         else
           respond_with(@order, :location => checkout_state_path(@order.state))
         end
