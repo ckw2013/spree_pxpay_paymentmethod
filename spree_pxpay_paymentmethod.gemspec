@@ -4,7 +4,7 @@ require "spree_pxpay_paymentmethod/version"
 
 Gem::Specification.new do |s|
   s.name        = "spree_pxpay_paymentmethod"
-  s.version     = "master"
+  s.version     = "2.0.0"
   s.authors     = ["ckw2013"]
   s.email       = ["kae.wan@wwwmedia.co.nz"]
   s.homepage    = ""
