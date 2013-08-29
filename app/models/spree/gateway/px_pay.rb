@@ -31,7 +31,7 @@ module Spree
     end
 
     def url(order, request)
-      callback = callback_url(request.host, request.protocol)
+      callback = callback_url(request.original_url)
       px_pay_request(payment(order), callback).url
     end
 
@@ -53,12 +53,15 @@ private
     def px_pay_request(payment, callback_url)
       Pxpay::Base.pxpay_user_id = self.preferred_user_id
       Pxpay::Base.pxpay_key     = self.preferred_key
-      Pxpay::Request.new(payment.id, payment.amount, { :url_success => "/order-successful", :url_failure => "/order-unsuccessful", :currency_input => self.preferred_currency_input })
+      Pxpay::Request.new(payment.id, payment.amount, { :url_success => callback_url, :url_failure => callback_url, :currency_input => self.preferred_currency_input })
     end
 
     # Calculates the url to return to after the PxPay process completes
-    def callback_url(host, protocol)
-      url_for(:controller => 'spree/checkout', :action => 'px_pay_callback', :only_path => false, :host => host, :protocol => protocol)
+    def callback_url(linkurl)
+      url_for(:controller => 'spree/checkout', :action => 'px_pay_callback', :only_path => false, :host => linkurl )
     end
   end
 end
+
+Commit summary: Extended description: (optional)
+ckw2013 marketing.guru1@gmail.com
