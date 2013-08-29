@@ -62,6 +62,3 @@ private
     end
   end
 end
-
-Commit summary: Extended description: (optional)
-ckw2013 marketing.guru1@gmail.com
