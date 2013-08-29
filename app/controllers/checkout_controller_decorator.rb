@@ -14,12 +14,11 @@ Spree::CheckoutController.class_eval do
         payment.started_processing
         payment.response_code = response[:auth_code]
         payment.save
-        payment.complete
         @order = payment.current_order
         @order.next
 
         state_callback(:after)
-        if @order.state == "complete" || @order.complete?
+        if @order.state == "complete"
           state_callback(:before)
           flash.notice = t(:order_processed_successfully)
           flash[:commerce_tracking] = "nothing special"
